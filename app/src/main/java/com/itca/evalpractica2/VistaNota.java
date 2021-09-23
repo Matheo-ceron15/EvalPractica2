@@ -28,7 +28,6 @@ public class VistaNota extends Activity {
 
         btn1 = findViewById(R.id.btn_borrar);
         btn2 = findViewById(R.id.btn_actualizar);
-        btn3 = findViewById(R.id.buscarCod);
 
     }
 

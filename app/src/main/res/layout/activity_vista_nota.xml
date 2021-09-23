@@ -86,28 +86,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:orientation="horizontal">
-            <Button
-                android:id="@+id/btn_borrar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="borrar"
-                android:text="Borrar"/>
+
             <Button
                 android:id="@+id/btn_actualizar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
                 android:onClick="actualizar"
                 android:text="Actualizar"
 
                 />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_borrar"
+                android:layout_marginStart="5dp"
+                android:text="Borrar"
+                />
         </LinearLayout>
-<!--        <Button-->
-<!--            android:id="@+id/buscarCod"-->
-<!--            android:onClick="buscarCod"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:text="b codigo"/>-->
     </LinearLayout>
 
 </LinearLayout>

@@ -15,7 +15,8 @@ public class OpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase bd) {
-        bd.execSQL("create table tb_Notas (id int primary key autoincrement, Titulo text, Descripcion text, Autor text)");
+        bd.execSQL("create table tb_Notas (id INTEGER PRIMARY KEY, Titulo text, Descripcion text, Autor text)");
+//        bd.execSQL("Insert into tb_Notas values(Null,"","","")");
     }
 
     @Override
