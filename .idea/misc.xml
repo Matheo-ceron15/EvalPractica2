@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ITCA/Documents/EvalPractica2/app/src/main/res/layout/activity_listado.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ITCA/Documents/EvalPractica2/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/ITCA/Documents/EvalPractica2/app/src/main/res/layout/activity_vista_nota.xml" value="0.22" />
       </map>
     </option>
   </component>

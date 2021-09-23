@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EvalPractica2">
         <activity
+            android:name=".VistaNota"
+            android:exported="true" />
+        <activity
+            android:name=".Listado"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
