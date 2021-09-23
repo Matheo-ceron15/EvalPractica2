@@ -1,7 +1,6 @@
 package com.itca.evalpractica2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import android.content.ContentValues;
 import android.content.Intent;
