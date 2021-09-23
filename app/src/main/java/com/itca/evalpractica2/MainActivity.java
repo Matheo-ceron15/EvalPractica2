@@ -4,18 +4,30 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
+
+    private String[] notas;
+    private ListView lv1;
+    private ArrayAdapter adaptador;
+    ArrayList<String> list;
+    ArrayAdapter adapter;
 
 
     private EditText et1, et2,et3;
@@ -25,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        lv1=(ListView)findViewById(R.id.lista_notas);
+
 
         et1 = findViewById(R.id.IngTitulo);
         et2= findViewById(R.id.IngDes);
@@ -37,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void guardar(View view) {
-        Toast.makeText(this, "guardado", Toast.LENGTH_SHORT).show();
 
         SQLiteDatabase bd = admin.getWritableDatabase();
         ContentValues registro = new ContentValues();
@@ -46,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         String descrip = et2.getText().toString();
         String autor = et3.getText().toString();
 
-
+        registro.put("id", (byte[]) null);
         registro.put("Titulo", titulo);
         registro.put("Descripcion", descrip);
         registro.put("Autor", autor);
