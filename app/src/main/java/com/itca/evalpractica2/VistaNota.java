@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -28,6 +29,19 @@ public class VistaNota extends Activity {
 
         btn1 = findViewById(R.id.btn_borrar);
         btn2 = findViewById(R.id.btn_actualizar);
+
+    }
+
+
+    public void inicio(View view) {
+        Intent intent = new Intent(VistaNota.this, MainActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void regresar(View view) {
+        Intent intent = new Intent(VistaNota.this, Listado.class);
+        startActivity(intent);
 
     }
 
