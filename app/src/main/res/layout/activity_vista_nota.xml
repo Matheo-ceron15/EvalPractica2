@@ -126,6 +126,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/btn_borrar"
                 android:layout_marginStart="5dp"
+                android:onClick="borrar"
                 android:text="Borrar"
                 />
         </LinearLayout>

@@ -23,62 +23,54 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private String[] notas;
-    private ListView lv1;
-    private ArrayAdapter adaptador;
-    ArrayList<String> list;
-    ArrayAdapter adapter;
+    private EditText titulo, desc, autor;
+
 
 
     private EditText et1, et2,et3;
     private Button btn1;
-    OpenHelper admin = new OpenHelper(this, "EvalNotas.db", null, 1);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lv1=(ListView)findViewById(R.id.lista_notas);
 
-
-        et1 = findViewById(R.id.IngTitulo);
-        et2= findViewById(R.id.IngDes);
-        et3=findViewById(R.id.IngAutor);
-
-        btn1 = findViewById(R.id.guardar);
-
-        
+        titulo = findViewById(R.id.IngTitulo);
+        desc = findViewById(R.id.IngDes);
+        autor = findViewById(R.id.IngAutor);
         
     }
 
     public void guardar(View view) {
 
-        SQLiteDatabase bd = admin.getWritableDatabase();
-        ContentValues registro = new ContentValues();
 
-        String titulo =et1.getText().toString();
-        String descrip = et2.getText().toString();
-        String autor = et3.getText().toString();
+        try {
+            OpenHelper conexion = new OpenHelper(this);
+            SQLiteDatabase bd = conexion.getWritableDatabase();
+            String t = titulo.getText().toString();
+            String d = desc.getText().toString();
+            String a = autor.getText().toString();
 
-        registro.put("id", (byte[]) null);
-        registro.put("Titulo", titulo);
-        registro.put("Descripcion", descrip);
-        registro.put("Autor", autor);
+            ContentValues registro = new ContentValues();
+            registro.put("id", (Integer) null);
+            registro.put("Titulo", t);
+            registro.put("Descripcion", d);
+            registro.put("Autor", a);
 
-        if (titulo.isEmpty()){
-            et1.setError("Campo obligatorio");
-        }else if (descrip.isEmpty()){
-            et2.setError("Campo obligatorio");
-        }else if (autor.isEmpty()){
-            et3.setError("Campo obligatorio");
-        }else {
-            bd.insert("tb_Notas", null, registro);
+            int result = (int) bd.insert("tb_Notas", null, registro);
             bd.close();
 
-            et1.setText(null);
-            et2.setText(null);
-            et3.setText(null);
-            Toast.makeText(this, "Nota guardada correctamente", Toast.LENGTH_SHORT).show();
+            if (result > 0) {
+                Toast.makeText(this, "Se guardo el registro", Toast.LENGTH_SHORT).show();
+                titulo.setText("");
+                desc.setText("");
+                autor.setText("");
+            } else {
+                Toast.makeText(this, "No Se guardo el registro", Toast.LENGTH_SHORT).show();
+            }
+        } catch (Exception e) {
+            String msg = e.toString();
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -115,4 +107,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Acion no disponible", Toast.LENGTH_SHORT).show();
     }
 
+    public void listado(View view) {
+        Intent intent= new Intent(MainActivity.this, Listado.class);
+        startActivity(intent);
+    }
 }

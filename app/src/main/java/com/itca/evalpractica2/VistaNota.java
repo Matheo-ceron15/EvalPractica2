@@ -14,21 +14,44 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class VistaNota extends Activity {
-    private EditText et1, et2,et3;
-    private Button btn1, btn2, btn3;
-    OpenHelper admin = new OpenHelper(this, "EvalNotas.db", null, 1);
+    public String x;
+    public EditText v;
+    public EditText titulo, desc, autor;
+    OpenHelper admin = new OpenHelper(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vista_nota);
 
+        titulo = findViewById(R.id.et_titulo);
+        desc = findViewById(R.id.et_descripcion);
+        autor = findViewById(R.id.et_autor);
 
-        et1 = findViewById(R.id.et_titulo);
-        et2= findViewById(R.id.et_descripcion);
-        et3=findViewById(R.id.et_autor);
+        Bundle bundle = new Bundle();
 
-        btn1 = findViewById(R.id.btn_borrar);
-        btn2 = findViewById(R.id.btn_actualizar);
+        String dato = getIntent().getStringExtra("valorTitle");
+
+        v = findViewById(R.id.et_titulo);
+        v.setText(dato);
+
+        x = v.getText().toString();
+
+
+        try {
+
+            OpenHelper conexion = new OpenHelper(this);
+            SQLiteDatabase bd = conexion.getWritableDatabase();
+
+            Cursor fila = bd.rawQuery("select Descripcion, Autor from tb_Notas where Titulo = '" + x + "'"  , null);
+            if(fila.moveToFirst()) {
+                desc.setText(fila.getString(0));
+                autor.setText(fila.getString(1));
+            }
+
+
+        } catch (Exception e) {
+            Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -46,79 +69,40 @@ public class VistaNota extends Activity {
     }
 
     public void borrar(View view) {
-        SQLiteDatabase bd = admin.getWritableDatabase();
+        OpenHelper conexion = new OpenHelper(this);
+        SQLiteDatabase bd = conexion.getWritableDatabase();
+        String t = titulo.getText().toString();
+        int cant = bd.delete("tb_Notas", "Titulo = '" + x + "'", null);
+        bd.close();
+        titulo.setText("");
+        desc.setText("");
+        autor.setText("");
 
-        String titulo =et1.getText().toString();
-
-
-        //METODO ELIMINAR
-        if (titulo.isEmpty()) {
-            et1.setError("campo obligatorio");
-        }else{
-            int cant = bd.delete("bt_Notas", "Titulo=" + titulo, null);
-            bd.close();
-            et1.setText("");
-            et2.setText("");
-            et3.setText("");
-            if (cant == 1){
-                Toast.makeText(this, "Se borro el articulocon dicho codigo", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this, "No existe un articulo con dicho codigo", Toast.LENGTH_SHORT).show();
-            }
-        }
+        Toast.makeText(this, "Nota borrada satisfactoriamente", Toast.LENGTH_SHORT).show();
 
     }
 
     public void actualizar(View view) {
 
-        String titulo =et1.getText().toString();
-        String descrip = et2.getText().toString();
-        String autor = et3.getText().toString();
-        SQLiteDatabase bd = admin.getWritableDatabase();
+        OpenHelper conexion = new OpenHelper(this);
+        SQLiteDatabase bd = conexion.getWritableDatabase();
+        String t = titulo.getText().toString();
+        String d = desc.getText().toString();
+        String a = autor.getText().toString();
+
+
         ContentValues registro = new ContentValues();
+        registro.put("Titulo", t);
+        registro.put("Descripcion", d);
+        registro.put("Autor", a);
 
-        //                                          METODO ELIMINAR
-        if (titulo.isEmpty()) {
-            et1.setError("campo obligatorio");
-        }else if (descrip.isEmpty()){
-            et2.setError("campo obligatorio");
-        }else if (autor.isEmpty()) {
-            et3.setError("campo obligatorio");
-        }else{
-            registro.put("codigo", titulo);
-            registro.put("descripcion", descrip);
-            registro.put("precio", autor);
-            int cant = bd.update("articulos", registro, "Titulo=" + titulo, null);
-            bd.close();
-            if (cant ==1){
-                Toast.makeText(this, "Se modificaron los datos", Toast.LENGTH_SHORT).show();
-            }else{
-                Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-            }
+        int cant = bd.update("tb_Notas", registro, "Titulo = '" + x + "'", null);
+        bd.close();
+        if (cant == 1) {
+            Toast.makeText(this, "Nota actualizada", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Error al actulizar la nota", Toast.LENGTH_SHORT).show();
         }
-
     }
 
-//    public void buscarCod(View view) {
-//        SQLiteDatabase bd = admin.getWritableDatabase();
-//
-//        String titulo =et1.getText().toString();
-//        String descrip = et2.getText().toString();
-//        String autor = et3.getText().toString();
-//
-//
-//        if (titulo.isEmpty()) {
-//            et1.setError("campo obligatorio");
-//        }else{
-//            Cursor fila = bd.rawQuery("select descripcion, precio from articulos where codigo=" + titulo, null);
-//            if (fila.moveToFirst()){
-//                et2.setText(fila.getString(0));
-//                et3.setText(fila.getString(1));
-//            }else{
-//                Toast.makeText(this, "No existe un articulo con dicho codigo", Toast.LENGTH_SHORT).show();
-//                bd.close();
-//            }
-//        }
-//
-//    }
 }

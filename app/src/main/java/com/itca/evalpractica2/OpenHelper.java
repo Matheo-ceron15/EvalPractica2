@@ -9,8 +9,8 @@ import androidx.annotation.Nullable;
 public class OpenHelper extends SQLiteOpenHelper {
 
 
-    public OpenHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+    public OpenHelper(@Nullable Context context) {
+        super(context, "EvalNotas.db", null, 1);
     }
 
     @Override
